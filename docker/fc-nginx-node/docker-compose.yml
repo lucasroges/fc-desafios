@@ -1,4 +1,14 @@
 services:
+  nginx:
+    build:
+      context: nginx
+    container_name: nginx
+    tty: true
+    networks:
+      - custom-network
+    ports:
+      - "8080:80"
+
   app:
     build:
       context: node
@@ -10,8 +20,6 @@ services:
       - custom-network
     expose:
       - "3000"
-    ports:
-      - "3000:3000"
     volumes:
       - ./node:/usr/src/app
     working_dir: /usr/src/app
