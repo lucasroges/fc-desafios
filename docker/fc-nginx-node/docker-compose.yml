@@ -13,7 +13,7 @@ services:
     build:
       context: node
     container_name: app
-    command: ["node", "index.js"]
+    command: sh -c "npm install && node index.js"
     entrypoint: dockerize -wait tcp://db:3306 --timeout 30s && docker-entrypoint.sh
     tty: true
     networks:
