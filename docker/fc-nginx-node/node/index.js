@@ -19,9 +19,13 @@ const name = 'Lucas'
 const insertCommand = `INSERT INTO people(name) values('${name}')`
 connection.query(insertCommand)
 
+connection.end()
+
 app.get('/', (req, res) => {
+    const innerConnection = mysql.createConnection(config)
+
     const selectCommand = 'SELECT name FROM people'
-    connection.query(selectCommand, (err, values) => {
+    innerConnection.query(selectCommand, (err, values) => {
         if (err) {
             res.send(`<h1>Full Cycle</h1><br>${err.message}`)
         }
@@ -31,7 +35,8 @@ app.get('/', (req, res) => {
         }, '')
         res.send(`<h1>Full Cycle</h1><br>${names}`)
     })
-    connection.end()    
+
+    innerConnection.end()       
 })
 
 app.listen(port, () => {
